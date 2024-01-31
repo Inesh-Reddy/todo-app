@@ -7,7 +7,7 @@ const app = express();
 app.use(express.json());
 
 
-app.post("create-todo", async function(req, res){
+app.post("/create-todo", async function(req, res){
     const createPayload = req.body;
     const parsedPayload = createTodo.safeParse(createPayload);
     if(!parsedPayload.success){
@@ -20,7 +20,7 @@ app.post("create-todo", async function(req, res){
     await todo.create({
         title: createPayload.title,
         description: createPayload.description,
-        completed: createPayload.fasle,
+        completed: false
     })
     res.json({
         msg: "Todo created",
@@ -28,14 +28,14 @@ app.post("create-todo", async function(req, res){
 
 })
 
-app.get("get-todo", async function(req, res){
+app.get("/get-todo", async function(req, res){
     const todos= await todo.find({});
     res.json({
         todos,
     })
 })
 
-app.put("update-todo", async function(req, res){
+app.put("/update-todo", async function(req, res){
     const updatePayload = req.body;
     const parsedPayload = updateTodo.safeParse(updatePayload);
     if(!parsedPayload.success){
